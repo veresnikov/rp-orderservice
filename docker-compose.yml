@@ -1,38 +1,38 @@
 version: '3.3'
 
 services:
-  microservicetemplate:
-    image: microservicetemplate
-    container_name: microservicetemplate
+  order:
+    image: order
+    container_name: order
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "8081:8081" # GRPC API port
     environment:
-      MICROSERVICETEMPLATE_DB_HOST: microservicetemplate-db
-      MICROSERVICETEMPLATE_DB_PORT: 3306
-      MICROSERVICETEMPLATE_DB_NAME: microservicetemplate
-      MICROSERVICETEMPLATE_DB_USER: microservicetemplate
-      MICROSERVICETEMPLATE_DB_PASSWORD: ${DB_PASSWORD}
-      MICROSERVICETEMPLATE_DB_MAX_CONN: 5
+      ORDER_DB_HOST: order-db
+      ORDER_DB_PORT: 3306
+      ORDER_DB_NAME: order
+      ORDER_DB_USER: order
+      ORDER_DB_PASSWORD: ${DB_PASSWORD}
+      ORDER_DB_MAX_CONN: 5
     depends_on:
-      - microservicetemplate-db
+      - order-db
     restart: unless-stopped
 
-  microservicetemplate-db:
+  order-db:
     image: percona:8.0
-    container_name: microservicetemplate-db
+    container_name: order-db
     environment:
-      MYSQL_DATABASE: microservicetemplate
-      MYSQL_USER: microservicetemplate
+      MYSQL_DATABASE: order
+      MYSQL_USER: order
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
-      - microservicetemplate-db-data:/var/lib/mysql
+      - order-db-data:/var/lib/mysql
     restart: unless-stopped
 
 volumes:
-  microservicetemplate-db-data:
+  order-db-data:
