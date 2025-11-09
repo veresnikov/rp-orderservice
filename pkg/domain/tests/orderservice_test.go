@@ -66,7 +66,7 @@ type mockEventDispatcher struct {
 	events []service.Event
 }
 
-func (m mockEventDispatcher) Dispatch(event service.Event) error {
+func (m *mockEventDispatcher) Dispatch(event service.Event) error {
 	m.events = append(m.events, event)
 	return nil
 }

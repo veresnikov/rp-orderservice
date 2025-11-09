@@ -29,14 +29,21 @@ type Order struct {
 }
 
 type Item struct {
-	ID        uuid.UUID
+	OrderID   uuid.UUID
 	ProductID uuid.UUID
 	Price     float64
+}
+
+type FindSpec struct {
+	OrderID        *uuid.UUID
+	CustomerID     *uuid.UUID
+	Status         *OrderStatus
+	IncludeDeleted bool
 }
 
 type OrderRepository interface {
 	NextID() (uuid.UUID, error)
 	Store(order *Order) error
-	Find(id uuid.UUID) (*Order, error)
+	Find(spec FindSpec) (*Order, error)
 	Delete(id uuid.UUID) error
 }
